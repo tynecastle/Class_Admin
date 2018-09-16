@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/static/comments.css"/>
+</head>
+<body>
+    <h1>User Login</h1>
+    <form method="POST" action="/login/">
+        <input type="text" name="username"/>
+        <input type="password" name="password"/>
+        <input type="submit" value="sign in"/>
+        {{ msg }}
+    </form>
+</body>
+</html>

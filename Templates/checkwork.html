@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8' />
+        <title></title>
+        <style type="text/css">
+            .green{
+                background-color: green;
+            }
+            .blue{
+                background-color: blue;
+            }
+            .red{
+                background-color: red;
+            }
+            .yellow{
+                background-color: yellow;
+            }
+            .big{
+                font-size: 50px;
+            }
+        </style>
+        <script type="text/javascript" src='jquery-3.2.1.js'></script>
+        <script type="text/javascript">
+            $(function() {
+                $('#div_id').click(function(){
+                                $(this).toggleClass("blue");})
+                            .mouseover(function(){
+                                $(this).addClass("big");})
+                            .mouseout(function(){
+                                $(this).removeClass("big");});
+                //$('.ordinal ul li').text('alphabet');
+                $('table tr:even').addClass('yellow');
+                $("div div:contains('find')").addClass('red');
+                $('table tr:nth-child(2)').text('22');
+            })
+        </script>
+    </head>
+    <body>
+        <div id='div_id' class='green'>content</div>
+        <div id='each' class='ordinal'>
+            <ul>
+                <li>first</li>
+                <li>second</li>
+                <li>third</li>
+            </ul>
+            <div>find me</div>
+        </div>
+        <table border='1'>
+            <tr><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td>2</td><td>2</td><td>2</td></tr>
+            <tr><td>3</td><td>3</td><td>3</td></tr>
+            <tr><td>4</td><td>4</td><td>4</td></tr>
+            <tr><td>5</td><td>5</td><td>5</td></tr>
+        </table>
+    </body>
+</html>

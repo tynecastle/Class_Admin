@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Built-in Template Tags</title>
+</head>
+<body>
+    <h1>Built-in template tags</h1>
+    <p>{{ name }}</p>
+    <p>{{ users.0 }}</p>
+    <p>{{ users.1 }}</p>
+    <p>{{ user_dict.k1 }}</p>
+    <p>{{ user_dict.k2 }}</p>
+    <h3>Loop control</h3>
+    <ul>
+        {% for item in users %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+    <table border="1">
+        {% for row in user_list_dict %}
+            <tr>
+                <td>{{ row.id }}</td>
+                <td>{{ row.name }}</td>
+                <td>{{ row.gender }}</td>
+                <td>
+                    <a>edit</a> | <a href="/del/?nid={{ row.id }}">del</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

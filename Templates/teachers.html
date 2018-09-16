@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .hide {
+            display: none;
+        }
+        .shadow {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: black;
+            opacity: 0.4;
+            z-index: 999;
+        }
+        .loading {
+            position: fixed;
+            width: 141px;
+            height: 17px;
+            left: 50%;
+            top: 50%;
+            margin-left: -100px;
+            margin-top: -50px;
+            background-image: url("/static/images/loading.gif")
+        }
+        .add-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 300px;
+            width: 400px;
+            background-color: white;
+            margin-left: -200px;
+            margin-top: -200px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teacher List</h1>
+    <a href="/add-teacher/">Add a teacher</a>
+    <a id="modalAdd">Add a teacher in modal</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>TID</th>
+                <th>TNAME</th>
+                <th>CLASSES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in teacher_dict %}
+                <tr>
+                    <td>{{ row.tid }}</td>
+                    <td>{{ row.tname }}</td>
+                    <td>
+                        {% for item in row.classes %}
+                            <span style="display: inline-block; padding: 6px; border: 1px solid green">{{ item }}</span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="/edit-teacher/?nid={{ row.tid }}">EDIT</a>
+                        |
+                        <a>DEL</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="shadow" class="shadow hide"></div>
+    <div id="loading" class="loading hide"></div>
+    <div id="addModal" class="add-modal hide">
+        <h3>Add a new teacher</h3>
+        <p>Teacher name:
+            <input id="addName" type="text" name="tchr_name" placeholder="first name"/>
+        </p>
+        <p>Class name:
+            <select id="addClassID" multiple size="6" name="class_ids">
+                <!--{% for item in class_list %}
+                    <option value="{{ item.cid }}">{{ item.cname }}</option>
+                {% endfor %}-->
+            </select>
+        </p>
+
+        <input id="addSubmit" type="button" value="submit"/>
+        <span id="addError" style="color: red;"></span>
+    </div>
+
+    <script src="/static/jquery-3.1.1.js"></script>
+    <script>
+        $(function() {
+            bindAdd();
+            bindAddSubmit();
+        });
+        function bindAdd() {
+            $('#modalAdd').click(function() {
+                $('#shadow,#loading').removeClass('hide');
+                $.ajax({
+                    url: '/get-all-classes/',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(arg) {
+                        console.log(arg);
+                        /* arg = [
+                            {cid:1, cname:xx},
+                            {cid:2, cname:xx},
+                            {cid:3, canme:xx},
+                        ] */
+                        $.each(arg,function(i,row) {    // i: index
+                            var tag = document.createElement('option');
+                            tag.innerHTML = row.cname;
+                            tag.setAttribute('value',row.cid);
+                            $('#addClassID').append(tag)
+                        });
+                        $('#loading').addClass('hide');
+                        $('#addModal').removeClass('hide');
+                    }
+                })
+            })
+        }
+        function bindAddSubmit() {
+            $('#addSubmit').click(function() {
+                var tname = $('#addName').val();
+                var class_list = $('#addClassID').val();
+                $.ajax({
+                    url: '/modal-add-teacher/',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {'tchr_name': tname, 'class_ids': class_list},
+                    traditional: true, //this property is required when some lists are submitted
+                    success: function(arg) {
+                        if(arg.status) {
+                            location.reload();
+                        } else {
+                            alert(arg.message);
+                        }
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+</html>

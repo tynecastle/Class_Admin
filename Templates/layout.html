@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="/static/css/common.css"/>
+    {% block css %} {% endblock %}
+</head>
+<body>
+    <div class="pg-header">
+        <div class="logo left">redis admin</div>
+        <div class="avatar right" style="position: relative">
+            <a><i class="fa fa-user-circle fa-lg" aria-hidden="true"></i></a>
+            <div class="user-info">
+                <a style="padding: 4px 10px">my profile</a>
+                <a style="padding: 4px 10px">sign out</a>
+            </div>
+        </div>
+        <div class="top-actions right">
+            <a><i class="fa fa-bell-o fa-lg" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <div class="pg-body">
+        <div class="navbar">
+            <a>class admin</a>
+            <a>student admin</a>
+            <a>teacher admin</a>
+        </div>
+        <div class="content">
+            <ol class="breadcrumb">
+                <li><a href="#">home</a></li>
+                <li><a href="#">class admin</a></li>
+                <li class="active">add a class</li>
+            </ol>
+            <div style="margin: 10px 40px;">
+                {% block content_buttons %} {% endblock %}
+            </div>
+            <div style="margin: 20px 40px;">
+                {% block content_table %} {% endblock %}
+            </div>
+            {% block stick %} {% endblock %}
+        </div>
+    </div>
+    <script src="/static/jquery-3.1.1.js"></script>
+    {% block js %} {% endblock %}
+</body>
+</html>

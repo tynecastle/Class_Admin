@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:nigel>
+    <head></head>
+    <link href="common.css" rel="stylesheet" />
+    <body>
+        <div class='container'>
+            <div class='tab-menu-box1'>
+                <div class='menu'>
+                    <ul id='tab-menu-title'>
+                        <li class='current' content-to='1'></li>
+    </body>
+        <meta charset='utf-8' />
+        <title></title>
+        <style type="text/css">
+            .green{
+                background-color: green;
+            }
+            .blue{
+                background-color: blue;
+            }
+            .big{
+                font-size: 50px;
+            }
+        </style>
+        <script type="text/javascript" src='jquery-3.2.1.js'></script>
+        <script type="text/javascript">
+            $(function() {
+                ChangeTab('#tab-menu-title', '#tab-menu-body');
+            })
+            function ChangeTab(title, body) {
+                $(title).children().bind("click", function() {
+                    $menu = $(this);
+                    $content = $(body).find('div[content="' + 
+                        $(this).attr("content-to") + '"]');
+                    $menu.addClass('current').siblings().removeClass('current');
+                    $content.removeClass('hide').siblings().addClass('hide');
+                });
+                                $(this).toggleClass("blue");})
+                            .mouseover(function(){
+                                $(this).addClass("big");})
+                            .mouseout(function(){
+                                $(this).removeClass("big");})
+            })
+        </script>
+    </head>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8' />
+        <title></title>
+        <style type="text/css">
+            .green{
+                background-color: green;
+            }
+            .blue{
+                background-color: blue;
+            }
+            .red{
+                background-color: red;
+            }
+            .yellow{
+                background-color: yellow;
+            }
+            .hide{
+                display: none;
+            }
+        </style>
+        <script type="text/javascript" src='jquery-3.2.1.js'></script>
+        <script type="text/javascript">
+            $(function() {
+                $(window).scroll(function(){
+                    var top = $(this).scrollTop();
+                    if(top > 100){
+                        $('#backtop').removeClass('hide');
+                    }else{
+                        $('#backtop').addClass('hide');
+                    }
+                });
+                $('#backtop').click(function(){
+                    $(window).scrollTop(0);
+                });
+            })
+        </script>
+    </head>
+    <body>
+        <div id='backtop' style='position:fixed;right:30px;bottom:30px;cursor:pointer' class='hide'>back to top</div>
+        <div style='height:900px;'>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <h1>Edit a class</h1>
+    <form method="POST" action="/edit-class/?nid={{ result.cid }}">
+        <p>Class name: <input type="text" name="cname" value="{{ result.cname }}"/></p>
+        <input type="submit" value="submit"/>
+    </form>
+</body>
+</html>

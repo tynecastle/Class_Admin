@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .hide {
+            display: none;
+        }
+        .shadow {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: black;
+            opacity: 0.4;
+            z-index: 999;
+        }
+        .add-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            height: 300px;
+            width: 400px;
+            background-color: white;
+            margin-left: -200px;
+            margin-top: -200px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Student List</h1>
+    <div>
+        <a href="/add-student/">Add a student</a>
+        <a id="modalAdd">Add a student in modal</a>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>SID</th>
+                <th>SNAME</th>
+                <th>CLASS</th>
+                <th>Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in student_list %}
+                <tr>
+                    <td>{{ row.sid }}</td>
+                    <td>{{ row.sname }}</td>
+                    <td clsID="{{ row.classid }}">{{ row.cname }}</td>
+                    <td>
+                        <a href="/edit-student/?nid={{ row.sid }}">EDIT</a>
+                        |
+                        <a class="modalEdit">MODAL EDIT</a>
+                        |
+                        <a href="/del-student/?nid={{ row.sid }}">DEL</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div id="shadow" class="shadow hide"></div>
+    <div id="addModal" class="add-modal hide">
+        <h3>Add a new student</h3>
+        <p>Student name:
+            <input id="addName" type="text" name="stu_name" placeholder="first name"/>
+        </p>
+        <p>Student gender:
+            <select id="addGender" name="gender">
+                <option>F</option>
+                <option>M</option>
+            </select>
+        </p>
+        <p>Class name:
+            <select id="addClassID" name="class_id">
+                {% for row in class_list %}
+                    <option value="{{ row.cid }}">{{ row.cname }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <input id="btnAdd" type="button" value="submit"/>
+        <span id="addError" style="color: red;"></span>
+    </div>
+
+    <div id="editModal" class="add-modal hide">
+        <h3>Edit student info</h3>
+        <p>Student name:
+            <input id="editName" type="text" name="stu_name" placeholder="first name"/>
+            <input id="editID" type="text" style="display: none"/>
+        </p>
+        <p>Class name:
+            <select id="editClassID" name="class_id">
+                {% for row in class_list %}
+                    <option value="{{ row.cid }}">{{ row.cname }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <input id="btnEdit" type="button" value="submit"/>
+        <span id="editError" style="color: red;"></span>
+    </div>
+
+    <script src="/static/jquery-3.1.1.js"></script>
+    <script>
+        // Typical jQuery binding
+        $(function() {
+
+            $('#modalAdd').click(function() {
+                $('#shadow,#addModal').removeClass('hide')
+            });
+
+            $('#btnAdd').click(function() {
+                $.ajax({
+                    url: '/modal-add-student/',
+                    type: 'POST',
+                    data: {'stu_name': $('#addName').val(), 'gender': $('#addGender').val(), 'class_id': $('#addClassID').val()},
+                    success: function(arg) {
+                        arg = JSON.parse(arg)
+                        if(arg.status) {
+                            location.reload()
+                        } else {
+                            $('#addError').text(arg.message)
+                        }
+                    }
+                })
+            });
+
+            $('.modalEdit').click(function() {
+                $('#shadow,#editModal').removeClass('hide')
+                var tds = $(this).parent().prevAll()
+                var studentID = $(tds[2]).text()
+                var studentName = $(tds[1]).text()
+                var classID = $(tds[0]).attr('clsID')
+                console.log(studentID,studentName,classID)
+                $('#editID').val(studentID)
+                $('#editName').val(studentName)
+                $('#editClassID').val(classID)
+            });
+
+            $('#btnEdit').click(function() {
+                $.ajax({
+                    url: '/modal-edit-student/',
+                    type: 'POST',
+                    data: {'nid': $('#editID').val(), 'stu_name': $('#editName').val(), 'class_id': $('#editClassID').val()},
+                    dataType: 'JSON', //JSON.parse(arg)
+                    success: function(arg) {
+                        //arg = JSON.parse(arg)
+                        if(arg.status) {
+                            location.reload()
+                        } else {
+                            $('#editError').text(arg.message)
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>

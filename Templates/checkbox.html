@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8' />
+        <script type='text/javascript' src='jquery-3.2.1.js'></script>
+        <script type='text/javascript' src='allcheck.js'></script>
+        <script type='text/javascript'>
+            $(function(){
+                $('#all1').click(function(){
+                    $('#body').allcheck();
+                })
+                $('#unall1').on('click', function(){
+                    $('#body').uncheck();
+                })
+                $('#all2').click(function(){
+                    $.jallcheck('#body');
+                })
+                $('#unall2').on('click', function(){
+                    $.juncheck('#body');
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <div id='each'>
+            <div>
+                <label for='all1'>checkall_1<input id='all1' type='checkbox' /></label>
+                <label for='unall1'>uncheck_1<input id='unall1' type='checkbox' /></label>
+                <label for='all2'>checkall_2<input id='all2' type='checkbox' /></label>
+                <label for='unall2'>uncheck_2<input id='unall2' type='checkbox' /></label>
+            </div>
+            <table id='body'>
+                <tr>
+                    <td><input name='nid' type='checkbox' /></td><td></td>
+                </tr>
+                <tr>
+                    <td><input name='nid' type='checkbox' /></td><td></td>
+                </tr>
+                <tr>
+                    <td><input name='nid' type='checkbox' /></td><td></td>
+                </tr>
+                <tr>
+                    <td><input name='nid' type='checkbox' /></td><td></td>
+                </tr>
+                <tr>
+                    <td><input name='nid' type='checkbox' /></td><td></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
